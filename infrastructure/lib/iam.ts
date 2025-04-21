@@ -25,13 +25,14 @@ function createRole(scope: Construct, id: string, props: IamProps) {
 }
 
 export class RoleStack extends cdk.Stack {
+  public readonly role: Role;
   constructor(scope: Construct, id: string, props: IamProps) {
     super(scope, id, props);
 
-    const role = createRole(this, id, props);
+    this.role = createRole(this, id, props);
 
     new CfnOutput(this, 'RoleArn', {
-      value: role.roleArn,
+      value: this.role.roleArn,
       description: 'The ARN of the IAM role',
       exportName: 'RoleArn',
     });
